@@ -8,7 +8,7 @@ package com.jiang.entity;
 public class BaseMessage {
 	private String ToUserName;		//接收方微信号
 	private String FromUserName;	//发送方微信号
-	private long CreateTime;		//创建时间
+	private String CreateTime;		//创建时间
 	private String MsgType;			//消息类型
 	
 	
@@ -24,10 +24,10 @@ public class BaseMessage {
 	public void setFromUserName(String fromUserName) {
 		FromUserName = fromUserName;
 	}
-	public long getCreateTime() {
+	public String getCreateTime() {
 		return CreateTime;
 	}
-	public void setCreateTime(long createTime) {
+	public void setCreateTime(String createTime) {
 		CreateTime = createTime;
 	}
 	public String getMsgType() {
