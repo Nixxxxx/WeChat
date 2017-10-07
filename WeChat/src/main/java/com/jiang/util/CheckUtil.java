@@ -3,8 +3,12 @@ package com.jiang.util;
 import java.security.MessageDigest;
 import java.util.Arrays;
 
+/**
+ * 微信接口配置
+ */
 public class CheckUtil {
-	private static final String token = "jiang";
+	private static final String token = "jiang";	//Token
+
 	public static boolean checkSignature(String signature,String timestamp,String nonce){
 		String[] arr = new String[]{token,timestamp,nonce};
 		//排序

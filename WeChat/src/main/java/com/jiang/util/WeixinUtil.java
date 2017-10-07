@@ -44,12 +44,6 @@ public class WeixinUtil {
 	private static final String ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
 	
 	private static final String UPLOAD_URL = "https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE";
-	
-	private static final String CREATE_MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
-	
-	private static final String QUERY_MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/get?access_token=ACCESS_TOKEN";
-	
-	private static final String DELETE_MENU_URL = "https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=ACCESS_TOKEN";
 	/**
 	 * get请求
 	 * @param url
@@ -205,84 +199,7 @@ public class WeixinUtil {
 		return token;
 	}
 	
-	/**
-	 * 组装菜单
-	 * @return
-	 */
-	public static Menu initMenu(){
-		Menu menu = new Menu();
-		ClickButton button11 = new ClickButton();
-		button11.setName("111");
-		button11.setType("click");
-		button11.setKey("11");
 
-		ViewButton button21 = new ViewButton();
-		button21.setName("换乘查询");
-		button21.setType("view");
-		button21.setUrl("http://www.hncsmtr.com/mtr-hr/app/common/subway/manage");
-
-		ViewButton button22 = new ViewButton();
-		button22.setName("站点及周边信息");
-		button22.setType("view");
-		button22.setUrl("http://www.hncsmtr.com/mtr-hr/app/common/subway/stationList");
-
-		ViewButton button23 = new ViewButton();
-		button23.setName("运营时刻表");
-		button23.setType("view");
-		button23.setUrl("http://www.imooc.com/");
-
-		ViewButton button24 = new ViewButton();
-		button24.setName("换乘查询");
-		button24.setType("view");
-		button24.setUrl("http://www.hncsmtr.com/yyfw/lxcx/yylxt/index.html");
-
-		Button button2 = new Button();
-		button2.setName("乘车指南");
-		button2.setSub_button(new Button[]{button21,button22,button23,button24});
-
-		ClickButton button31 = new ClickButton();
-		button31.setName("扫码事件");
-		button31.setType("scancode_push");
-		button31.setKey("31");
-
-		ClickButton button32 = new ClickButton();
-		button32.setName("地理位置");
-		button32.setType("location_select");
-		button32.setKey("32");
-
-		Button button3 = new Button();
-		button3.setName("菜单");
-		button3.setSub_button(new Button[]{button31,button32});
-
-		menu.setButton(new Button[]{button11,button2,button3});
-		return menu;
-	}
-
-	public static int createMenu(String token,String menu) throws ParseException, IOException{
-		int result = 0;
-		String url = CREATE_MENU_URL.replace("ACCESS_TOKEN", token);
-		JSONObject jsonObject = doPostStr(url, menu);
-		if(jsonObject != null){
-			result = jsonObject.getInt("errcode");
-		}
-		return result;
-	}
-	
-	public static JSONObject queryMenu(String token) throws ParseException, IOException{
-		String url = QUERY_MENU_URL.replace("ACCESS_TOKEN", token);
-		JSONObject jsonObject = doGetStr(url);
-		return jsonObject;
-	}
-	
-	public static int deleteMenu(String token) throws ParseException, IOException{
-		String url = DELETE_MENU_URL.replace("ACCESS_TOKEN", token);
-		JSONObject jsonObject = doGetStr(url);
-		int result = 0;
-		if(jsonObject != null){
-			result = jsonObject.getInt("errcode");
-		}
-		return result;
-	}
 	
 
 }
