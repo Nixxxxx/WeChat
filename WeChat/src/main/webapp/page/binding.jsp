@@ -6,6 +6,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
 <html>
 <head>
     <meta charset="utf-8">
@@ -14,7 +18,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <title>绑定 | 班务管理系统</title>
-    <base href="<?php echo base_url();?>"/>
+    <base href="<%=basePath%>"/>
     <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.css">
     <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.0.1/css/jquery-weui.css">
     <link rel="stylesheet" href="https://cdn.bootcss.com/light7/0.4.3/css/light7.css">
@@ -117,7 +121,7 @@
 </div>
 
 <script src='./static/dist/js/jquery.min.js?version=3.1.1'></script>
-<script type='text/javascript' src='./static/dist/light7/js/light7.js' charset='utf-8'></script>
+<script type='text/javascript' src='https://cdn.bootcss.com/light7/0.4.3/js/light7.js' charset='utf-8'></script>
 <script>
     $.init();
 </script>

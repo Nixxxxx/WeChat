@@ -19,8 +19,9 @@
 	
 	<!-- 配置数据源 -->
 	<bean id="dataSource"
-		class="com.alibaba.druid.pool.DruidDataSource">
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="url" value="jdbc:mysql://localhost:3306/db_wechat?useUnicode=true&amp;characterEncoding=UTF-8"/>
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
 		<property name="username" value="root"/>
 		<property name="password" value="123456"/>
 	</bean>
@@ -29,7 +30,7 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<!-- 自动扫描mappers.xml文件 -->
-		<property name="mapperLocations" value="classpath:com/jiang/mappers/*.xml"></property>
+		<property name="mapperLocations" value="classpath:mappers/*.xml"></property>
 		<!-- mybatis配置文件 -->
 		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
 	</bean>
