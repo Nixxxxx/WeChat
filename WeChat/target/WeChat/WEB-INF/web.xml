@@ -55,7 +55,7 @@
 
   <servlet>
     <servlet-name>weixinServlet</servlet-name>
-    <servlet-class>com.jiang.servlet.WeixinServlet</servlet-class>
+    <servlet-class>com.jiang.controller.WeixinServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>

@@ -55,7 +55,7 @@ public class MenuUtil {
 		ClickButton button11 = new ClickButton();
 		button11.setName("111");
 		button11.setType("click");
-		button11.setKey("11");
+		button11.setKey("1");
 
 		ViewButton button21 = new ViewButton();
 		button21.setName("换乘查询");
@@ -76,6 +76,11 @@ public class MenuUtil {
 		button24.setName("换乘查询");
 		button24.setType("view");
 		button24.setUrl("http://www.hncsmtr.com/yyfw/lxcx/yylxt/index.html");
+
+		ViewButton button25 = new ViewButton();
+		button25.setName("11");
+		button25.setType("view");
+		button25.setUrl("http://jiangh.ngrok.cc/WeChat/binding.jsp");
 
 		Button button2 = new Button();
 		button2.setName("乘车指南");

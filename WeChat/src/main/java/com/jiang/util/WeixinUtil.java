@@ -1,9 +1,5 @@
 package com.jiang.util;
 
-import com.jiang.menu.Button;
-import com.jiang.menu.ClickButton;
-import com.jiang.menu.Menu;
-import com.jiang.menu.ViewButton;
 import com.jiang.po.AccessToken;
 import net.sf.json.JSONObject;
 import org.apache.http.HttpEntity;
@@ -38,12 +34,16 @@ import java.util.Map;
  *
  */
 public class WeixinUtil {
+
 	private static final String APPID = "wxb6b7953e4c715715";
 	private static final String APPSECRET = "f7f7e1573aa645043f21f75265e5e75b";
 	
 	private static final String ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
 	
 	private static final String UPLOAD_URL = "https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE";
+
+	private static final String OPENID_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect";
+
 	/**
 	 * get请求
 	 * @param url
@@ -82,7 +82,14 @@ public class WeixinUtil {
 		jsonObject = JSONObject.fromObject(result);
 		return jsonObject;
 	}
-	
+
+	public static JSONObject getOAuthOpenId(String code) throws IOException {
+		String url = OPENID_URL.replace("APPID",APPID);
+		url.replace("code","");
+		url.replace("SCOPE","snsapi_base");
+		url.replace("REDIRECT_URI","www.baidu.com");
+		return doGetStr(url);
+	}
 	/**
 	 * 文件上传
 	 * @param filePath
@@ -94,6 +101,7 @@ public class WeixinUtil {
 	 * @throws NoSuchProviderException
 	 * @throws KeyManagementException
 	 */
+
 	public static String upload(String filePath, String accessToken,String type) throws IOException, NoSuchAlgorithmException, NoSuchProviderException, KeyManagementException {
 		File file = new File(filePath);
 		if (!file.exists() || !file.isFile()) {

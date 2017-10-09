@@ -19,9 +19,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <title>绑定 | 班务管理系统</title>
     <base href="<%=basePath%>"/>
-    <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.css">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-weui/1.0.1/css/jquery-weui.css">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/light7/0.4.3/css/light7.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/weui/1.1.2/style/weui.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/jquery-weui/1.0.1/css/jquery-weui.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/light7/0.4.3/css/light7.css">
 </head>
 <body>
 <div class="page-group">
@@ -120,8 +120,8 @@
     </div>
 </div>
 
-<script src='./static/dist/js/jquery.min.js?version=3.1.1'></script>
-<script type='text/javascript' src='https://cdn.bootcss.com/light7/0.4.3/js/light7.js' charset='utf-8'></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="//cdn.bootcss.com/light7/0.4.3/js/light7.js" charset="utf-8"></script>
 <script>
     $.init();
 </script>
@@ -135,10 +135,9 @@
                 {
                     textAlign: 'center',
                     values: <?php echo $class;?>
-        //如果希望显示文案和实际值不同，可以在这里加一个displayValues: [.....]
-    }
-    ]
-    });
+            //如果希望显示文案和实际值不同，可以在这里加一个displayValues: [.....]
+            }]
+        });
     })
 </script>
 <script>
@@ -182,10 +181,10 @@
 
         $admin_form.submit(function () {
             $.ajax({
-                url: "<?php echo site_url('user/admin_login');?>",
-                type: 'POST',
+                url: "user/admin_login",
+                type: "POST",
                 data: $admin_form.serialize(),
-                dataType: 'json',
+                dataType: "json",
                 beforeSend: function () {
                     $.showIndicator();
                 },
@@ -194,9 +193,9 @@
                 },
                 success: function (data) {
                     if (data.success) {
-                        $.alert(data.msg, '登录成功', function () {
+                        $.alert(data.msg, "登录成功", function () {
                             if (typeof WeixinJSBridge === "object") {
-                                WeixinJSBridge.call('closeWindow');
+                                WeixinJSBridge.call("closeWindow");
                             }
                         });
                     } else {
