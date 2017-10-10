@@ -44,6 +44,13 @@ public class WeixinUtil {
 
 	private static final String OPENID_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect";
 
+
+	public static String q(){
+		String url = OPENID_URL.replace("APPID", APPID);
+		url = url.replace("REDIRECT_URI", "http://jiangh.ngrok.cc/WeChat/passenger/q");
+		url = url.replace("SCOPE", "snsapi_base");
+		return url;
+	}
 	/**
 	 * get请求
 	 * @param url
