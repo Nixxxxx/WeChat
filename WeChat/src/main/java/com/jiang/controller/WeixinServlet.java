@@ -4,7 +4,6 @@ import com.jiang.po.MessageMenu;
 import com.jiang.util.CheckUtil;
 import com.jiang.util.MessageUtil;
 import com.jiang.util.WeixinUtil;
-import net.sf.json.JSONObject;
 import org.dom4j.DocumentException;
 
 import javax.servlet.ServletException;
@@ -62,7 +61,7 @@ public class WeixinServlet extends HttpServlet {
 				}else if("3".equals(content)){
 					message = MessageUtil.initText(toUserName, fromUserName, MessageMenu.threeMenu());
 				}else if("?".equals(content) || "？".equals(content)){
-					message = MessageUtil.initText(toUserName, fromUserName, WeixinUtil.q());
+					message = MessageUtil.initText(toUserName, fromUserName, WeixinUtil.getCodeUrl());
 				}
 			}else if(MessageUtil.MESSAGE_EVNET.equals(msgType)){
 				String eventType = map.get("Event");

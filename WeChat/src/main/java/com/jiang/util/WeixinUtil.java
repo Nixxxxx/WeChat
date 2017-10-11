@@ -21,12 +21,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 微信工具类
@@ -35,22 +32,40 @@ import java.util.Map;
  */
 public class WeixinUtil {
 
+	//微信公众号/测试号appID
 	private static final String APPID = "wxb6b7953e4c715715";
+	//微信公众号/测试号appsecret
 	private static final String APPSECRET = "f7f7e1573aa645043f21f75265e5e75b";
-	
+	//获取公众号access_toke（公众号全局唯一接口调用凭据）的URL
 	private static final String ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
-	
+	//
 	private static final String UPLOAD_URL = "https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE";
+	//用户同意授权，获取code的URL
+	private static final String CODE_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect";
+	//通过code换取网页授权access_token的URL
+	private static final String CODE_TO_OPENID = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code";
 
-	private static final String OPENID_URL = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect";
-
-
-	public static String q(){
-		String url = OPENID_URL.replace("APPID", APPID);
-		url = url.replace("REDIRECT_URI", "http://jiangh.ngrok.cc/WeChat/passenger/q");
-		url = url.replace("SCOPE", "snsapi_base");
+	/**
+	 * 用户同意授权 获取code
+	 * @return url
+	 */
+	public static String getCodeUrl(){
+		//snsapi_base:用户openid snsapi_userinfo:用户基本信息
+		String url = CODE_URL.replace("APPID", APPID).replace("SCOPE", "snsapi_base");
+		url = url.replace("REDIRECT_URI", "http%3A%2F%2Fjiangh.ngrok.cc%2FWeChat%2Fuser%2Fq");
 		return url;
 	}
+
+	/**
+	 * 通过code换取网页授权access_token
+	 * @param code
+	 * @return
+	 */
+	public static JSONObject getAccessToken(String code) throws IOException {
+		String url = CODE_TO_OPENID.replace("APPID", APPID).replace("SECRET", APPSECRET).replace("CODE", code);
+		return doGetStr(url);
+	}
+
 	/**
 	 * get请求
 	 * @param url
@@ -61,14 +76,14 @@ public class WeixinUtil {
 	public static JSONObject doGetStr(String url) throws ParseException, IOException{
 		DefaultHttpClient client = new DefaultHttpClient();
 		HttpGet httpGet = new HttpGet(url);
-		JSONObject jsonObject = null;
+		JSONObject json = null;
 		HttpResponse httpResponse = client.execute(httpGet);
 		HttpEntity entity = httpResponse.getEntity();
 		if(entity != null){
 			String result = EntityUtils.toString(entity,"UTF-8");
-			jsonObject = JSONObject.fromObject(result);
+			json = JSONObject.fromObject(result);
 		}
-		return jsonObject;
+		return json;
 	}
 	
 	/**
@@ -81,22 +96,16 @@ public class WeixinUtil {
 	 */
 	public static JSONObject doPostStr(String url,String outStr) throws ParseException, IOException{
 		DefaultHttpClient client = new DefaultHttpClient();
-		HttpPost httpost = new HttpPost(url);
-		JSONObject jsonObject = null;
-		httpost.setEntity(new StringEntity(outStr,"UTF-8"));
-		HttpResponse response = client.execute(httpost);
+		HttpPost httpPost = new HttpPost(url);
+		JSONObject json = null;
+		httpPost.setEntity(new StringEntity(outStr,"UTF-8"));
+		HttpResponse response = client.execute(httpPost);
 		String result = EntityUtils.toString(response.getEntity(),"UTF-8");
-		jsonObject = JSONObject.fromObject(result);
-		return jsonObject;
+		json = JSONObject.fromObject(result);
+		return json;
 	}
 
-	public static JSONObject getOAuthOpenId(String code) throws IOException {
-		String url = OPENID_URL.replace("APPID",APPID);
-		url.replace("code","");
-		url.replace("SCOPE","snsapi_base");
-		url.replace("REDIRECT_URI","www.baidu.com");
-		return doGetStr(url);
-	}
+
 	/**
 	 * 文件上传
 	 * @param filePath
